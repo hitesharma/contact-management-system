@@ -1,0 +1,30 @@
+{
+	"name": "contact-management-system",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon index.js --exec babel-node -e js",
+		"debug": "nodemon node_modules/.bin/babel-node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hitesharma/contact-management-system.git"
+	},
+	"author": "Hitesh Sharma",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/hitesharma/contact-management-system/issues"
+	},
+	"homepage": "https://github.com/hitesharma/contact-management-system#readme",
+	"dependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-stage-0": "^6.24.1",
+		"express": "^4.17.1",
+		"express-graphql": "^0.12.0",
+		"graphql": "^15.4.0",
+		"graphql-tools": "^7.0.2",
+		"mongoose": "^5.10.16"
+	}
+}
