@@ -46,5 +46,13 @@ export const resolvers = {
 				);
 			});
 		},
+		deleteContact: (root, { id }) => {
+			return new Promise((resolve, reject) => {
+				Contacts.findByIdAndDelete(id, (err) => {
+					if (err) reject(err);
+					else resolve('Contact Deleted');
+				});
+			});
+		},
 	},
 };
