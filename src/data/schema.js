@@ -13,6 +13,7 @@ const typeDefs = `
 
     type Query {
         getContacts: [Contact]
+        getContact(id: ID): Contact
     }
 
     input ContactInput {
