@@ -1,5 +1,5 @@
 import { Contacts } from './dbConnectors';
-
+import _ from 'lodash';
 export const resolvers = {
 	Query: {
 		getContacts: () => {
@@ -8,13 +8,15 @@ export const resolvers = {
 	},
 	Mutation: {
 		createContact: (root, { input }) => {
-			const newContact = new Contacts({
-				firstName: input.firstName,
-				lastName: input.lastName,
-				email: input.email,
-				company: input.company,
-				phone: input.phone,
-			});
+			const newContact = new Contacts(
+				_.pick(input, [
+					'firstName',
+					'lastName',
+					'email',
+					'company',
+					'phone',
+				])
+			);
 			newContact.id = newContact._id;
 			return new Promise((resolve, reject) => {
 				newContact.save((err) => {
