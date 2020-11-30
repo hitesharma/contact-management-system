@@ -2,20 +2,16 @@ import { Contacts } from './dbConnectors';
 import _ from 'lodash';
 export const resolvers = {
 	Query: {
-		getContacts: () => {
-			return Contacts.find();
+		getContacts: async () => {
+			return await Contacts.find();
 		},
-		getContact: (root, { id }) => {
-			return new Promise((resolve, reject) => {
-				Contacts.findById(id, (err, contact) => {
-					if (err) reject(err);
-					else resolve(contact);
-				});
-			});
+		getContact: async (root, { id }) => {
+			var data = await Contacts.findOne({ _id: id });
+			return data;
 		},
 	},
 	Mutation: {
-		createContact: (root, { input }) => {
+		createContact: async (root, { input }) => {
 			const newContact = new Contacts(
 				_.pick(input, [
 					'firstName',
@@ -26,33 +22,20 @@ export const resolvers = {
 				])
 			);
 			newContact.id = newContact._id;
-			return new Promise((resolve, reject) => {
-				newContact.save((err) => {
-					if (err) reject(err);
-					else resolve(newContact);
-				});
-			});
+			await newContact.save();
+			return newContact;
 		},
-		updateContact: (root, { input }) => {
-			return new Promise((resolve, reject) => {
-				Contacts.findOneAndUpdate(
-					{ _id: input.id },
-					_.omit(input, ['id']),
-					{ new: true },
-					(err, contact) => {
-						if (err) reject(err);
-						else resolve(contact);
-					}
-				);
-			});
+		updateContact: async (root, { input }) => {
+			const data = await Contacts.findOneAndUpdate(
+				{ _id: input.id },
+				_.omit(input, ['id']),
+				{ new: true }
+			);
+			return data;
 		},
-		deleteContact: (root, { id }) => {
-			return new Promise((resolve, reject) => {
-				Contacts.findByIdAndDelete(id, (err) => {
-					if (err) reject(err);
-					else resolve('Contact Deleted');
-				});
-			});
+		deleteContact: async (root, { id }) => {
+			await Contacts.deleteOne({ _id: id });
+			return 'Contact Deleted';
 		},
 	},
 };
